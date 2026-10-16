@@ -2,8 +2,13 @@
 // Body is sent as text/plain so the browser does NOT send a CORS preflight
 // (Apps Script can't answer OPTIONS). Apps Script still parses it as JSON.
 
-const SCRIPT_URL = import.meta.env.VITE_SCRIPT_URL;
-const APP_KEY = import.meta.env.VITE_APP_KEY || '';
+// Built-in defaults so the app works even when Netlify env vars are missing.
+// Netlify "Environment variables" (VITE_SCRIPT_URL / VITE_APP_KEY) override these.
+const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxB4k2NOVrRJwDPsEjPDgQ-eaFgWBligoZuYoZ27EvMCT6Pu7kR5iyvB3YzaV2q07zp/exec';
+const DEFAULT_APP_KEY = 'dbr-ChOUQzEg1M3I';
+
+const SCRIPT_URL = (import.meta.env.VITE_SCRIPT_URL || DEFAULT_SCRIPT_URL).trim();
+const APP_KEY = (import.meta.env.VITE_APP_KEY || DEFAULT_APP_KEY).trim();
 
 export const isConfigured = () => Boolean(SCRIPT_URL && SCRIPT_URL.includes('/exec'));
 
